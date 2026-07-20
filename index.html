@@ -17,20 +17,18 @@ html, body, #canvas {
 }
 
 body {
-	color: #f2e6c8;
-	background-color: #141f12;
+	color: #35212e;
+	background-color: #f4cca1;
 	overflow: hidden;
 	touch-action: none;
 }
 
-#canvas {
-	display: block;
-}
+#canvas { display: block; }
+#canvas:focus { outline: none; }
 
-#canvas:focus {
-	outline: none;
-}
-
+/* ---- Daylight cap palette, light side: cream surface, dark-plum text,
+   rounded cap-red progress pill. Type-forward, no sprites — character comes
+   from the bouncing wordmark, the rounded candy-striped bar, and the copy. */
 #status {
 	position: absolute;
 	inset: 0;
@@ -38,130 +36,129 @@ body {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	gap: 18px;
+	gap: 32px;
 	visibility: hidden;
 	background:
-		radial-gradient(ellipse at 50% 42%, #26371f 0%, #1b2a17 45%, #141f12 100%);
+		radial-gradient(ellipse 100% 85% at 50% 40%, #f9dcb6 0%, #f4cca1 62%, #edbd8e 100%);
 	font-family: 'BoldPixels', monospace;
-	transition: opacity 0.4s ease;
+	transition: opacity 0.5s ease;
 	z-index: 10;
 }
+#status.fading { opacity: 0; }
 
-#status.fading {
-	opacity: 0;
-}
-
-#shroom-wrap {
+/* ---- wordmark hero ---- */
+#brand {
 	position: relative;
-	width: 128px;
-	height: 152px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0 24px;
 }
-
-#shroom {
-	width: 128px;
-	height: 128px;
-	background: url(data:image/png;base64,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) 0 0 no-repeat;
-	image-rendering: pixelated;
-	transform-origin: 50% 100%;
-	animation: bob 2.4s ease-in-out infinite;
-}
-
-#shroom-shadow {
+#glow {
 	position: absolute;
-	left: 50%;
-	bottom: 6px;
-	width: 72px;
-	height: 14px;
-	background: rgba(0, 0, 0, 0.35);
-	border-radius: 50%;
-	transform: translateX(-50%);
-	animation: shadow-pulse 2.4s ease-in-out infinite;
+	inset: -46px -24px;
+	background: radial-gradient(ellipse at center,
+		rgba(169, 59, 59, 0.16) 0%, rgba(169, 59, 59, 0) 68%);
+	animation: glowpulse 2.8s ease-in-out infinite;
+	pointer-events: none;
 }
-
-@keyframes bob {
-	0%, 100% { transform: translateY(0) scale(1, 1); }
-	30%      { transform: translateY(-10px) scale(0.97, 1.05); }
-	60%      { transform: translateY(0) scale(1.04, 0.95); }
-	75%      { transform: translateY(0) scale(1, 1.01); }
-}
-
-@keyframes shadow-pulse {
-	0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.9; }
-	30%      { transform: translateX(-50%) scale(0.82); opacity: 0.55; }
-	60%      { transform: translateX(-50%) scale(1.06); opacity: 1; }
-}
-
 #title {
-	font-size: 52px;
+	position: relative;
+	font-size: 76px;
 	letter-spacing: 4px;
-	color: #f2e6c8;
-	text-shadow: 4px 4px 0 #0a120a;
+	color: #35212e;
+	/* playful cap-red drop shadow gives the wordmark a sticker-like pop */
+	text-shadow:
+		3px 4px 0 #a93b3b,
+		6px 8px 0 rgba(53, 33, 46, 0.22);
 	margin: 0;
 	line-height: 1;
 	user-select: none;
+	transform-origin: 50% 100%;
+	animation: bounce 2.8s ease-in-out infinite;
+}
+@keyframes bounce {
+	0%, 100% { transform: translateY(0)     scale(1, 1); }
+	45%      { transform: translateY(-9px)  scale(1.02, 0.98); }
+	60%      { transform: translateY(-9px)  scale(0.99, 1.02); }
+}
+@keyframes glowpulse {
+	0%, 100% { opacity: 0.55; transform: scale(1); }
+	50%      { opacity: 0.95; transform: scale(1.07); }
 }
 
 #flavor {
-	font-size: 20px;
-	color: #b8c9a3;
-	text-shadow: 2px 2px 0 #0a120a;
-	min-height: 24px;
+	font-size: 21px;
+	color: #7a444a;
+	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.35);
+	min-height: 25px;
+	letter-spacing: 1px;
 	user-select: none;
 }
 
+/* ---- progress: rounded pill, light track, dark border, red candy fill ---- */
 #bar-wrap {
 	display: none;
-	flex-direction: column;
 	align-items: center;
-	gap: 8px;
+	gap: 14px;
 }
-
 #bar {
-	width: 328px;
-	max-width: 80vw;
-	height: 22px;
-	background: #0a120a;
-	border: 3px solid #f2e6c8;
-	box-shadow: 3px 3px 0 #0a120a;
-	padding: 3px;
+	width: 320px;
+	max-width: 66vw;
+	height: 26px;
+	background: #fbe6cb;
+	border: 3px solid #35212e;
+	border-radius: 999px;
+	box-shadow: 0 4px 0 rgba(53, 33, 46, 0.28);
+	padding: 4px;
 	box-sizing: content-box;
+	overflow: hidden;
 }
-
 #bar-fill {
 	height: 100%;
 	width: 0%;
-	background: linear-gradient(180deg, #a5e06a 0%, #7ec850 45%, #5c9c38 100%);
+	border-radius: 999px;
+	background:
+		linear-gradient(180deg, rgba(255, 255, 255, 0.32) 0%, rgba(255, 255, 255, 0) 46%),
+		repeating-linear-gradient(45deg, #bb433c 0 13px, #a93b3b 13px 26px),
+		#a93b3b;
+	background-size: auto, 37px 37px, auto;
+	transition: width 0.22s ease-out;
+	animation: stripe 0.9s linear infinite;
 }
-
+@keyframes stripe {
+	to { background-position: 0 0, 37px 0, 0 0; }
+}
 #bar.indeterminate #bar-fill {
-	width: 30%;
-	animation: sweep 1.2s ease-in-out infinite alternate;
+	width: 34%;
+	transition: none;
+	animation: stripe 0.9s linear infinite, sweep 1.2s ease-in-out infinite alternate;
 }
-
 @keyframes sweep {
 	from { margin-left: 0; }
-	to   { margin-left: 70%; }
+	to   { margin-left: 66%; }
 }
-
 #pct {
-	font-size: 18px;
-	color: #8fa878;
-	text-shadow: 2px 2px 0 #0a120a;
+	font-size: 20px;
+	color: #35212e;
+	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.35);
+	min-width: 3ch;
 	user-select: none;
 }
 
 #status-notice {
 	display: none;
-	background-color: #3a2420;
-	border: 3px solid #9b4a3a;
-	box-shadow: 4px 4px 0 #0a120a;
-	color: #f2e6c8;
+	background-color: #fbe6cb;
+	border: 3px solid #a93b3b;
+	border-radius: 16px;
+	box-shadow: 0 5px 0 rgba(53, 33, 46, 0.28);
+	color: #35212e;
 	font-size: 16px;
 	line-height: 1.5;
 	margin: 0 2rem;
-	max-width: 80vw;
+	max-width: 78vw;
 	overflow: hidden;
-	padding: 1rem;
+	padding: 1.1rem 1.3rem;
 	text-align: center;
 }
 	</style>
@@ -291,11 +288,10 @@ body {
 	</noscript>
 
 	<div id="status">
-		<div id="shroom-wrap">
-			<div id="shroom-shadow"></div>
-			<div id="shroom"></div>
+		<div id="brand">
+			<div id="glow"></div>
+			<h1 id="title">Mushies!</h1>
 		</div>
-		<h1 id="title">Mushies</h1>
 		<div id="flavor">&nbsp;</div>
 		<div id="bar-wrap">
 			<div id="bar"><div id="bar-fill"></div></div>
@@ -306,7 +302,7 @@ body {
 
 	<script src="index.js"></script>
 	<script>
-const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":71931216,"index.wasm":39509339},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":72173360,"index.wasm":39509339},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
 const GODOT_THREADS_ENABLED = false;
 const engine = new Engine(GODOT_CONFIG);
 
@@ -345,7 +341,7 @@ const engine = new Engine(GODOT_CONFIG);
 		if (mode === 'hidden') {
 			clearInterval(flavorTimer);
 			statusOverlay.classList.add('fading');
-			setTimeout(() => statusOverlay.remove(), 450);
+			setTimeout(() => statusOverlay.remove(), 520);
 			initializing = false;
 			return;
 		}
@@ -421,13 +417,13 @@ const engine = new Engine(GODOT_CONFIG);
 					// Quantize to 8px steps so the fill grows in chunky
 					// pixel increments instead of sliding smoothly.
 					const frac = Math.min(current / total, 1);
-					const steps = 41; // 328px bar / 8px
+					const steps = 40; // 320px bar / 8px
 					barFill.style.width = ((Math.floor(frac * steps) / steps) * 100) + '%';
 					pct.textContent = Math.floor(frac * 100) + '%';
 					bar.classList.remove('indeterminate');
 				} else {
 					bar.classList.add('indeterminate');
-					pct.textContent = ' ';
+					pct.textContent = ' ';
 				}
 			},
 		}).then(() => {
